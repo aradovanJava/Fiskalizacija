@@ -16,11 +16,23 @@ public class TaxRate{
 	private double rate;
 	
 	@XmlElement(name = "Osnovica")
-	private double mainValue;
+	private double baseValue;
 	
 	@XmlElement(name = "Iznos")
 	private double value;
 	
+	
+	public TaxRate(){
+	}
+	
+	
+	public TaxRate(double rate, double baseValue, double value, String name) {
+		super();
+		this.name = name;
+		this.rate = rate;
+		this.baseValue = baseValue;
+		this.value = value;
+	}
 	
 	
 	public String getName() {
@@ -40,11 +52,11 @@ public class TaxRate{
 	}
 
 	public double getMain() {
-		return mainValue;
+		return baseValue;
 	}
 
 	public void setMain(double mainValue) {
-		this.mainValue = mainValue;
+		this.baseValue = mainValue;
 	}
 
 	public double getValue() {

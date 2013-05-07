@@ -18,6 +18,8 @@ public class BillNumber {
 	@XmlElement(name = "OznNapUr")
 	private String noteOfExcangeDevice;
 	
+	public BillNumber(){
+	}
 	
 	public BillNumber(int numnerNoteBill, String noteOfBusinessArea, String noteOfExcangeDevice) {
 		super();

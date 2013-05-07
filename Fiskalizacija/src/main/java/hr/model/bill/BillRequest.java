@@ -22,6 +22,8 @@ public class BillRequest {
 	@XmlAttribute(name = "Id")
 	String id = "racunId";
 	
+	public BillRequest(){
+	}
 	
 	public BillRequest(RequestHeader requestHeader, Bill bill) {
 		super();

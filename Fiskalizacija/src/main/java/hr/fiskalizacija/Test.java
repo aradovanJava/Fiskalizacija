@@ -1,12 +1,19 @@
 package hr.fiskalizacija;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import hr.model.Address;
 import hr.model.AddressData;
 import hr.model.BusinessArea;
 import hr.model.BusinessAreaRequest;
 import hr.model.RequestHeader;
+import hr.model.bill.Bill;
+import hr.model.bill.BillNumber;
+import hr.model.bill.BillRequest;
+import hr.model.bill.Refund;
+import hr.model.bill.TaxRate;
 
 public class Test {
 
@@ -75,8 +82,60 @@ public class Test {
 				// potrebno je postaviti alias, ako ima više parova privatni kljuè - certifikat, ili koristi konstruktor s 4 parametara
 			//	fiskal.setAliasForPairJKSCert("60251384564");
 			
-				System.out.println(fiskal.sendSoapBusinessArea(fiskal, businessAreaRequest));
+			//	System.out.println(fiskal.sendSoapBusinessArea(fiskal, businessAreaRequest));
 
+				
+				
+				
+			//	Kreiranje raèuna
+//----------------------------------------------------------------------------------------------------------------------------------------
+				
+				Refund refund = new Refund("Naziv naknade", 5.4);
+				
+				BillNumber billNumber = new BillNumber(1, "ODV1", "NAPL1");
+				
+				List<TaxRate> listPdv = new ArrayList<TaxRate>();
+				listPdv.add(new TaxRate(25, 400, 20, ""));
+				listPdv.add(new TaxRate(10, 500, 15.4, ""));
+				
+				List<TaxRate> listPnp = new ArrayList<TaxRate>();
+				listPnp.add(new TaxRate(30, 100, 10, ""));
+				listPnp.add(new TaxRate(20, 200.1, 20, ""));
+				
+				List<TaxRate> listOtherTaxRate = new ArrayList<TaxRate>();
+				listOtherTaxRate.add(new TaxRate(40, 453.3, 12, "Naziv1"));
+				listOtherTaxRate.add(new TaxRate(27, 445, 50, "Naziv2"));
+				
+				
+				Bill bill = new Bill();
+				
+				bill.setOib("12345678901");
+				bill.setHavePDV(true);
+				bill.setDateTime(new GregorianCalendar(2013, GregorianCalendar.MAY, 5));
+				bill.setNoteOfOrder("P");
+				bill.setBillNumber(billNumber);
+				bill.setListPDV(listPdv);
+				bill.setListPNP(listPnp);
+				bill.setListOtherTaxRate(listOtherTaxRate);
+				bill.setTaxFreeValue(23.53);
+				bill.setMarginForTaxRate(32.544);
+				bill.setTaxFree(5);
+				bill.setRefund(refund);
+				bill.setTotalValue(456);
+				bill.setTypeOfPlacanje("G");
+				bill.setOibOperative("3456212343");
+				bill.setSecurityCode("ZKI");
+				bill.setNoteOfRedelivary(false);
+				
+				
+				BillRequest billRequest = new BillRequest(new RequestHeader(), bill);
+				
+				CreateXmls createXmls = new CreateXmls();
+				
+				System.out.println(createXmls.createXmlForRequest(billRequest));
+				
+				
+				
 	}
 
 }

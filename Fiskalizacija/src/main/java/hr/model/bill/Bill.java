@@ -57,7 +57,7 @@ public class Bill{
 	private Refund refund;
 	
 	@XmlElement(name = "IznosUkupno")
-	private double mainValue;
+	private double totalValue;
 	
 	@XmlElement(name = "NacinPlac")
 	private String typeOfPaying;
@@ -81,6 +81,9 @@ public class Bill{
 	@XmlTransient
 	SimpleDateFormat dateTimeformatForBill = new SimpleDateFormat("dd.MM.yyyy'T'HH:mm:ss");
 
+	public Bill(){
+	}
+	
 	
 	public String getOib() {
 		return oib;
@@ -178,12 +181,12 @@ public class Bill{
 		this.refund = refund;
 	}
 
-	public double getMainValue() {
-		return mainValue;
+	public double getTotalValue() {
+		return totalValue;
 	}
 
-	public void setMainValue(double mainValue) {
-		this.mainValue = mainValue;
+	public void setTotalValue(double totalValue) {
+		this.totalValue = totalValue;
 	}
 
 	public String getTypeOfPaying() {
@@ -198,7 +201,7 @@ public class Bill{
 		return oibOperative;
 	}
 
-	public void setOibOperater(String oibOperative) {
+	public void setOibOperative(String oibOperative) {
 		this.oibOperative = oibOperative;
 	}
 

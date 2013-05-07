@@ -16,6 +16,9 @@ public class Refund{
 	private double valueRefund;
 	
 	
+	public Refund(){
+	}
+	
 	public Refund(String nameRefund, double valueRefund) {
 		super();
 		this.nameRefund = nameRefund;
