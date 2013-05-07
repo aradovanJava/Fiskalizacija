@@ -30,7 +30,7 @@ public class Fiscalization extends CertParameters{
 	
 	
 	public String sendSoapBusinessArea(Fiscalization fiskal, BusinessAreaRequest businessAreaRequest){
-		return writeSoap(new Connections().sendSoapMessage(new SignProbVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().businessAreaXml(businessAreaRequest)), fiskal),fiskal));
+		return writeSoap(new Connections().sendSoapMessage(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().businessAreaXml(businessAreaRequest)), fiskal),fiskal));
 	}
 	
 	
