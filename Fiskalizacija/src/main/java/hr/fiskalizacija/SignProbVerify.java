@@ -37,7 +37,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class SignVerify {
+public class SignProbVerify {
 
 	private static final String POSLOVNI_PROSTOR_ID = "poslovniProstorId";
 	 private static final String PATTERN_FOR_GET_ID = "//*[@Id='%s']";
