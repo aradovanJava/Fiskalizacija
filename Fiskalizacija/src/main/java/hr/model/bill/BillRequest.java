@@ -9,9 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import hr.model.RequestHeader;
 @XmlRootElement(name = "RacunZahtjev", namespace = "http://www.apis-it.hr/fin/2012/types/f73")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BillRequest {
+public class BillRequest{
 
-	// Dodati namespaceove u prvi tag (RacunZahtjev)
+	// Dodati namespaceove u prvi tag
+	/*
+	  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.apis-it.hr/fin/2012/types/f73 ../schema/FiskalizacijaSchema.xsd"
+	 */
 	
 	@XmlElement(name = "Zaglavlje")
 	private RequestHeader requestHeader;
