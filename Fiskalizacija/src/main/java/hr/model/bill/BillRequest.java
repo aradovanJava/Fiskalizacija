@@ -2,6 +2,7 @@ package hr.model.bill;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,6 +19,9 @@ public class BillRequest {
 	@XmlElement(name = "Racun")
 	private Bill bill;	
 
+	@XmlAttribute(name = "Id")
+	String id = "racunId";
+	
 	
 	public BillRequest(RequestHeader requestHeader, Bill bill) {
 		super();

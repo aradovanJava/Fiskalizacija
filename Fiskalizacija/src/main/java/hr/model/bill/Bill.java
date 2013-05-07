@@ -1,5 +1,6 @@
 package hr.model.bill;
 
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -232,4 +233,42 @@ public class Bill{
 	public void setSpecificPurpose(String specificPurpose) {
 		this.specificPurpose = specificPurpose;
 	}
+	
+	
+	
+	/**
+	 * metoda vraæa ZKI (zaštitni kod raèuna) za odreðene ulazne parametre
+	 * @param sDate
+	 * @param sBrojDok
+	 * @param sSifObjekta
+	 * @param sSifBlag
+	 * @param sIznos
+	 * @return
+	 */
+	public String securityCode(String sDate, String sBrojDok, String sSifObjekta, String sSifBlag, String sIznos) {
+		String sMedjRez = "";
+		String sRezMD5 = "";
+		try {		// sPK + sOIB + ubaciti u red ispod
+			sMedjRez =  sDate + sBrojDok + sSifObjekta + sSifBlag + sIznos;
+
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.reset();
+			digest.update(sMedjRez.getBytes());
+
+			byte[] a = digest.digest();
+			int len = a.length;
+			StringBuilder sb = new StringBuilder(len << 1);
+
+			for (int i = 0; i < len; i++) {
+				sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
+				sb.append(Character.forDigit(a[i] & 0x0f, 16));
+			}
+
+			sRezMD5 = sb.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return sRezMD5;
+	}
+	
 }

@@ -20,6 +20,7 @@ import javax.xml.soap.SOAPPart;
 import org.w3c.dom.Document;
 
 import hr.model.BusinessAreaRequest;
+import hr.model.bill.BillRequest;
 
 
 public class CreateXmls{
@@ -57,21 +58,30 @@ public class CreateXmls{
 	
 	
 	
-	public String businessAreaXml(BusinessAreaRequest businessAreaRequest){
+	public String createXmlForRequest(Object requestObject){
 		
 		// Potrebno implementirati provjere za podatke koji moraju biti u xml-u, te bacanje grešaka ako neki nije unesen
-		 StringWriter writer = new StringWriter();
-		  try{
-			  JAXBContext jaxbContext;
-			  jaxbContext = JAXBContext.newInstance(new Class[] {BusinessAreaRequest.class});
-			  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			  jaxbMarshaller.marshal(businessAreaRequest, writer);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	        return writer.toString();		
+				 
+				StringWriter writer = new StringWriter();
+				  try{
+					  JAXBContext jaxbContext = null;
+					  if(requestObject instanceof BusinessAreaRequest){
+							 jaxbContext = JAXBContext.newInstance(new Class[] {BusinessAreaRequest.class});
+						}else if(requestObject instanceof BillRequest){
+							jaxbContext = JAXBContext.newInstance(new Class[] {BillRequest.class});
+						}else{
+							throw new RuntimeException("Objekt koji je proslijeðen metodi nije tipa BusinessAreaRequest ili BillRequest");
+						}
+					  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+					  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+					  jaxbMarshaller.marshal(requestObject, writer);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			        return writer.toString();			
 	}
+	
+	
 	
 	
 	public SOAPMessage createSoapMessage(String input_msg){
