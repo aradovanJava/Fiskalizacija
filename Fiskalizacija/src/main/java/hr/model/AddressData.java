@@ -9,18 +9,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "AdresniPodatak")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AdressData{
+public class AddressData{
 	
 	@XmlElement(name = "Adresa")
-	private Adress adress;
+	private Address adress;
 	
 	@XmlElement(name = "OstaliTipoviPP")
 	private String otherBusinessArea; 
 	
-	 public Adress getAdress(){
+	 public Address getAdress(){
 		return adress;
 	}
-	public void setAdress(Adress adress){
+	public void setAdress(Address adress){
 		this.adress = adress;
 	}
 	public String getOtherBusinessArea(){

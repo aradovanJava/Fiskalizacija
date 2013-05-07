@@ -47,22 +47,22 @@ public class Bill{
 	private double taxFreeValuePdv;
 	
 	@XmlElement(name = "IznosMarza")
-	private double marzaForTaxRate;
+	private double marginForTaxRate;
 	
 	@XmlElement(name = "IznosNePodlOpor")
 	private double taxFreeValue;
 	
 	@XmlElement(name = "Naknada")
-	private Naknada naknada;
+	private Refund refund;
 	
 	@XmlElement(name = "IznosUkupno")
 	private double mainValue;
 	
 	@XmlElement(name = "NacinPlac")
-	private String typeOfPlacanje;
+	private String typeOfPaying;
 	
 	@XmlElement(name = "OibOper")
-	private String oibOperater;
+	private String oibOperative;
 	
 	@XmlElement(name = "ZastKod")
 	private String securityCode;
@@ -153,12 +153,12 @@ public class Bill{
 		this.taxFreeValuePdv = taxFreeValuePdv;
 	}
 
-	public double getMarzaForTaxRate() {
-		return marzaForTaxRate;
+	public double getMarginForTaxRate() {
+		return marginForTaxRate;
 	}
 
-	public void setMarzaForTaxRate(double marzaForTaxRate) {
-		this.marzaForTaxRate = marzaForTaxRate;
+	public void setMarginForTaxRate(double marginForTaxRate) {
+		this.marginForTaxRate = marginForTaxRate;
 	}
 
 	public double getTaxFree() {
@@ -169,12 +169,12 @@ public class Bill{
 		this.taxFreeValue = taxFreeValue;
 	}
 
-	public Naknada getNaknada() {
-		return naknada;
+	public Refund getRefund() {
+		return refund;
 	}
 
-	public void setNaknada(Naknada naknada) {
-		this.naknada = naknada;
+	public void setRefund(Refund refund) {
+		this.refund = refund;
 	}
 
 	public double getMainValue() {
@@ -185,20 +185,20 @@ public class Bill{
 		this.mainValue = mainValue;
 	}
 
-	public String getTypeOfPlacanje() {
-		return typeOfPlacanje;
+	public String getTypeOfPaying() {
+		return typeOfPaying;
 	}
 
-	public void setTypeOfPlacanje(String typeOfPlacanje) {
-		this.typeOfPlacanje = typeOfPlacanje;
+	public void setTypeOfPlacanje(String typeOfPaying) {
+		this.typeOfPaying = typeOfPaying;
 	}
 
-	public String getOibOperater() {
-		return oibOperater;
+	public String getOibOperative() {
+		return oibOperative;
 	}
 
-	public void setOibOperater(String oibOperater) {
-		this.oibOperater = oibOperater;
+	public void setOibOperater(String oibOperative) {
+		this.oibOperative = oibOperative;
 	}
 
 	public String getSecurityCode() {

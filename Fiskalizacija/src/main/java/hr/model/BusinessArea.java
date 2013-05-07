@@ -22,7 +22,7 @@ public class BusinessArea {
 	private String noteOfBusinessArea;
 	
 	@XmlElement(name = "AdresniPodatak")
-	private AdressData adressData;
+	private AddressData adressData;
 	
 	@XmlElement(name = "RadnoVrijeme")
 	private String workingTime;
@@ -54,10 +54,10 @@ public class BusinessArea {
 	public void setNoteOfBusinessArea(String noteOfBusinessArea) {
 		this.noteOfBusinessArea = noteOfBusinessArea;
 	}
-	public AdressData getAdressData() {
+	public AddressData getAdressData() {
 		return adressData;
 	}
-	public void setAdressData(AdressData adressData) {
+	public void setAdressData(AddressData adressData) {
 		this.adressData = adressData;
 	}
 	public String getWorkingTime() {

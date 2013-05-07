@@ -5,9 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "Addresa")
+@XmlRootElement(name = "Adresa")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Adress {
+public class Address {
 
 	@XmlElement(name = "Ulica")
 	private String street;

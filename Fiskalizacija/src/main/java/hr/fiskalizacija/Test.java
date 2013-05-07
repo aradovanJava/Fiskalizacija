@@ -2,8 +2,8 @@ package hr.fiskalizacija;
 
 import java.util.GregorianCalendar;
 
-import hr.model.Adress;
-import hr.model.AdressData;
+import hr.model.Address;
+import hr.model.AddressData;
 import hr.model.BusinessArea;
 import hr.model.BusinessAreaRequest;
 import hr.model.RequestHeader;
@@ -32,7 +32,7 @@ public class Test {
 				System.out.println(fiskal.sendEchoMessage(fiskal));
 			
 				
-				Adress adress = new Adress();
+				Address adress = new Address();
 				adress.setCity("Zagreb");
 				adress.setStreet("Zagrebacka");
 				adress.setHouseNumber("100");
@@ -40,7 +40,7 @@ public class Test {
 				adress.setSettlement("Rudes");
 				adress.setZipCode("10000");
 				
-				AdressData adressData = new AdressData();
+				AddressData adressData = new AddressData();
 				adressData.setAdress(adress);
 				
 				BusinessArea businessArea = new BusinessArea();
