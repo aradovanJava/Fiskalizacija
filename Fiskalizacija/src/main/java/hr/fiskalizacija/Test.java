@@ -112,7 +112,7 @@ public class Test {
 				bill.setOib("12345678901");
 				bill.setHavePDV(true);
 				bill.setDateTime(new GregorianCalendar(2013, GregorianCalendar.MAY, 5));
-				bill.setNoteOfOrder("P");
+				bill.setNoteOfOrder('P');
 				bill.setBillNumber(billNumber);
 				bill.setListPDV(listPdv);
 				bill.setListPNP(listPnp);
@@ -120,7 +120,7 @@ public class Test {
 				bill.setTaxFreeValue(23.53);
 				bill.setMarginForTaxRate(32.544);
 				bill.setTaxFree(5);
-				bill.setRefund(refund);
+				//bill.setRefund(refund);
 				bill.setTotalValue(456);
 				bill.setTypeOfPlacanje("G");
 				bill.setOibOperative("3456212343");

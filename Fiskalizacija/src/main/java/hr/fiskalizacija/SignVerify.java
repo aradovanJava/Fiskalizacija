@@ -43,12 +43,27 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+
+/**
+ * Klasa koja vrši potpisivanje privatnim kljuèem, te verifikaciju potpisa javnim kljuèem 
+ * 
+ *
+ */
 public class SignVerify {
 
 	private static final String POSLOVNI_PROSTOR_ID = "poslovniProstorId";
 	 private static final String PATTERN_FOR_GET_ID = "//*[@Id='%s']";
 	
 	
+	 /**
+	  * Metoda za potpisivanje SOAP poruke
+	  * 
+	  * vraæa potpisanu SOAP poruku
+	  * 
+	  * @param soap
+	  * @param certParameters
+	  * @return
+	  */
 	   public SOAPMessage signSoap(SOAPMessage soap, CertParameters certParameters){
 		   
 	        // Ucitaj SOAP poruku i dohvati sadrzaj

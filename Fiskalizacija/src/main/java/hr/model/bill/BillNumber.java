@@ -5,35 +5,58 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Klasa za kreiranje taga koji definira broj raèuna/poslovni prostor/naplatni ureðaj
+ * 
+ * 
+ */
 @XmlRootElement(name = "BrRac")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BillNumber {
 
-	@XmlElement(name = "BrOznRac")
-	private int numnerNoteBill;
 	
+	/**
+	 * Brojèana oznaka raèuna
+	 * 
+	 * Obvezan
+	 */
+	@XmlElement(name = "BrOznRac")
+	private int numberNoteBill;
+	
+	
+	/**
+	 * Oznaka poslovnog prostora koji je ranije prijavljen XML-om
+	 * 
+	 * Obvezan
+	 */
 	@XmlElement(name = "OznPosPr")
 	private String noteOfBusinessArea;
 	
+	
+	/**
+	 * Oznaka naplatnog ureðaja
+	 * 
+	 * Obvezan
+	 */
 	@XmlElement(name = "OznNapUr")
 	private String noteOfExcangeDevice;
 	
 	public BillNumber(){
 	}
 	
-	public BillNumber(int numnerNoteBill, String noteOfBusinessArea, String noteOfExcangeDevice) {
+	public BillNumber(int numberNoteBill, String noteOfBusinessArea, String noteOfExcangeDevice) {
 		super();
-		this.numnerNoteBill = numnerNoteBill;
+		this.numberNoteBill = numberNoteBill;
 		this.noteOfBusinessArea = noteOfBusinessArea;
 		this.noteOfExcangeDevice = noteOfExcangeDevice;
 	}
 	
 	public int getNumnerNoteBill() {
-		return numnerNoteBill;
+		return numberNoteBill;
 	}
 
-	public void setNumnerNoteBill(int numnerNoteBill) {
-		this.numnerNoteBill = numnerNoteBill;
+	public void setNumberNoteBill(int numberNoteBill) {
+		this.numberNoteBill = numberNoteBill;
 	}
 
 	public String getNoteOfBusinessArea() {
