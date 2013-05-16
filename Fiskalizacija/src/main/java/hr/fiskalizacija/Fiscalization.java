@@ -3,6 +3,8 @@ package hr.fiskalizacija;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 
+import javax.xml.soap.SOAPMessage;
+
 import hr.model.BusinessAreaRequest;
 import hr.model.CertParameters;
 
@@ -91,10 +93,12 @@ public class Fiscalization extends CertParameters{
 	 * @param businessAreaRequest
 	 * @return
 	 */
-	public String sendSoapBusinessArea(Fiscalization fiskal, BusinessAreaRequest businessAreaRequest){
-		return writeSoap(new Connections().sendSoapMessage(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(businessAreaRequest)), fiskal),fiskal));
+	public String sendSoap(Fiscalization fiskal, Object objectForCreateXml){
+		return writeSoap(new Connections().sendSoapMessage(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(objectForCreateXml)), fiskal),fiskal));
 	}
 	
+	public Boolean verifyResponseSOAP(SOAPMessage message){
+		return null;}
 	
 	/**
 	 * Metoda za preuzimanje OIB-a iz certifikata 

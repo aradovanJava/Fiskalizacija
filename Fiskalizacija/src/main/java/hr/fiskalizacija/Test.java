@@ -33,7 +33,7 @@ public class Test {
 			Ova funkcija se pozva samo jednom, te je potrebno da oba certifikata budu istog naziva i u istom direktoriju - putanji (npr. FiskalCert.cer i FiskalCert.pfx)
 			Ako nemaju istu putanju ili naziv, moguæe je postaviti setterima sve vrijednosti. Defaultni alias za ssl certifikat je "SSL" + oib
 			*/	
-		//	Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
+		Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
 				
 			// Slanje i ispis echo odgovora od servisa porezne uprave
 				System.out.println(fiskal.sendEchoMessage(fiskal));
@@ -82,7 +82,7 @@ public class Test {
 				// potrebno je postaviti alias, ako ima više parova privatni kljuè - certifikat, ili koristi konstruktor s 4 parametara
 			//	fiskal.setAliasForPairJKSCert("60251384564");
 			
-			//	System.out.println(fiskal.sendSoapBusinessArea(fiskal, businessAreaRequest));
+				System.out.println(fiskal.sendSoap(fiskal, businessAreaRequest));
 
 				
 				
@@ -132,7 +132,7 @@ public class Test {
 				
 				CreateXmls createXmls = new CreateXmls();
 				
-				System.out.println(createXmls.createXmlForRequest(billRequest));
+			//	System.out.println(createXmls.createXmlForRequest(billRequest));
 				
 				
 				
