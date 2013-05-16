@@ -1,0 +1,265 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ILLEGAL_INSTRUCTION (0xc000001d) at pc=0x00000000025d85c3, pid=7632, tid=7448
+#
+# JRE version: 6.0_31-b05
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (20.6-b01 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# v  ~BufferBlob::native signature handlers
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000058e000):  JavaThread "main" [_thread_in_Java, id=7448, stack(0x0000000002490000,0x0000000002590000)]
+
+siginfo: ExceptionCode=0xc000001d
+
+Registers:
+RAX=0x000000000258f630, RBX=0x00000000daec1550, RCX=0x0000000000000e00, RDX=0x00000000025d85b6
+RSP=0x000000000258f598, RBP=0x000000000258f610, RSI=0x00000000dae560b8, RDI=0x0000000020000031
+R8 =0x0000000000000000, R9 =0x0000000000000001, R10=0x0000000000000000, R11=0x00000000025d85b6
+R12=0x0000000000000000, R13=0x00000000daec1550, R14=0x000000000258f630, R15=0x000000000058e000
+RIP=0x00000000025d85c3, EFLAGS=0x0000000000010202
+
+Top of Stack: (sp=0x000000000258f598)
+0x000000000258f598:   00000000025a1250 0000000000000000
+0x000000000258f5a8:   00000000dae08200 0000000000000000
+0x000000000258f5b8:   000000000058e000 000000000258f618
+0x000000000258f5c8:   0000000002595b22 000000000258f5d0
+0x000000000258f5d8:   00000000daec1550 000000000258f630
+0x000000000258f5e8:   00000000daec2288 0000000000000000
+0x000000000258f5f8:   00000000daec1550 0000000000000000
+0x000000000258f608:   000000000258f630 000000000258f678
+0x000000000258f618:   00000000025959c9 0000000000000000
+0x000000000258f628:   0000000000000000 00000000f5561008
+0x000000000258f638:   000000000258f638 00000000dae56feb
+0x000000000258f648:   000000000258f680 00000000daea5e98
+0x000000000258f658:   0000000000000000 00000000dae56ff8
+0x000000000258f668:   000000000258f630 000000000258f688
+0x000000000258f678:   000000000258f6c0 0000000002590524
+0x000000000258f688:   0000000000000000 000000000258f880 
+
+Instructions: (pc=0x00000000025d85c3)
+0x00000000025d85a3:   e3 59 02 00 00 00 00 c3 48 b8 57 e3 59 02 00 00
+0x00000000025d85b3:   00 00 c3 49 8d 06 45 33 c0 49 81 3e 00 00 00 00
+0x00000000025d85c3:   4c 1f 45 c0 48 b8 5b e3 59 02 00 00 00 00 c3 48
+0x00000000025d85d3:   b8 5b e3 59 02 00 00 00 00 c3 49 8d 06 45 33 c0 
+
+
+Register to memory mapping:
+
+RAX=0x000000000258f630 is pointing into the stack for thread: 0x000000000058e000
+RBX=0x00000000daec1550 is an oop
+{method} 
+ - klass: {other class}
+RCX=0x0000000000000e00 is an unknown value
+RDX=0x00000000025d8550 [CodeBlob (0x00000000025d8550)]
+Framesize: 0
+BufferBlob (0x00000000025d8550) used for native signature handlers
+RSP=0x000000000258f598 is pointing into the stack for thread: 0x000000000058e000
+RBP=0x000000000258f610 is pointing into the stack for thread: 0x000000000058e000
+RSI=0x00000000dae560b8 is an oop
+{constant pool} 
+ - klass: {other class}
+ - cache: 0x00000000daea5e98
+ -   1 :  : "All subclasses should override this method" {0xdaeefed8}
+ -   2 :  : "Can not make a java.lang.Class constructor accessible" {0xdaeeff60}
+ -   3 :  : "suppressAccessChecks" {0xdaee9cc0}
+ -   4 :  : '()V'
+ -   5 :  : '()Z'
+ -   6 :  : '(Ljava/lang/String;)V'
+ -   7 :  : '(Z)V'
+ -   8 :  : '<clinit>'
+ -   9 :  : '<init>'
+ -  10 :  : 'ACCESS_PERMISSION'
+ -  11 :  : 'All subclasses should override this method'
+ -  12 :  : 'Can not make a java.lang.Class constructor accessible'
+ -  13 :  : 'Code'
+ -  14 :  : 'Exceptions'
+ -  15 :  : 'InnerClasses'
+ -  16 :  : 'Signature'
+ -  17 :  : 'Z'
+ -  18 :  : 'checkPermission'
+ -  19 :  : 'doPrivileged'
+ -  20 :  : 'getAnnotation'
+ -  21 :  : 'getAnnotations'
+ -  22 :  : 'getDeclaredAnnotations'
+ -  23 :  : 'getDeclaringClass'
+ -  24 :  : 'getSecurityManager'
+ -  25 :  : 'isAccessible'
+ -  26 :  : 'isAnnotationPresent'
+ -  27 :  : 'java/lang/AssertionError'
+ -  28 :  : 'java/lang/Class'
+ -  29 :  : 'java/lang/Object'
+ -  30 :  : 'java/lang/SecurityException'
+ -  31 :  : 'java/lang/SecurityManager'
+ -  32 :  : 'java/lang/System'
+ -  33 :  : 'java/lang/reflect/AccessibleObject'
+ -  34 :  : 'java/lang/reflect/AnnotatedElement'
+ -  35 :  : 'java/lang/reflect/Constructor'
+ -  36 :  : 'java/lang/reflect/ReflectPermission'
+ -  37 :  : 'java/security/AccessController'
+ -  38 :  : 'override'
+ -  39 :  : 'reflectionFactory'
+ -  40 :  : 'setAccessible'
+ -  41 :  : 'setAccessible0'
+ -  42 :  : 'sun/reflect/ReflectionFactory'
+ -  43 :  : 'sun/reflect/ReflectionFactory$GetReflectionFactoryAction'
+ -  44 :  : 'suppressAccessChecks'
+ -  45 :  : 'java/lang/AssertionError'
+ -  46 :  : 'java/lang/Class'
+ -  47 :  : 'java/lang/Object'
+ -  48 :  : 'java/lang/SecurityException'
+ -  49 :  : 'java/lang/SecurityManager'
+ -  50 :  : 'java/lang/System'
+ -  51 :  : 'java/lang/reflect/AccessibleObject' {0xdae57080}
+ -  52 :  : 'java/lang/reflect/AnnotatedElement'
+ -  53 :  : 'java/lang/reflect/Constructor'
+ -  54 :  : 'java/lang/reflect/ReflectPermission' {0xdaee9938}
+ -  55 :  : 'java/security/AccessController' {0xdaec1fb0}
+ -  56 :  : 'sun/reflect/ReflectionFactory'
+ -  57 :  : 'sun/reflect/ReflectionFactory$GetReflectionFactoryAction' {0xdaeea4b0}
+ -  58 :  : 'Ljava/security/Permission;'
+ -  59 :  : 'Lsun/reflect/ReflectionFactory;'
+ -  60 :  : '<T::Ljava/lang/annotation/Annotation;>(Ljava/lang/Class<TT;>;)TT;'
+ -  61 :  : '()Ljava/lang/Class;'
+ -  62 :  : '(Ljava/lang/Class;)Z'
+ -  63 :  : '(Ljava/lang/Object;)V'
+ -  64 :  : '()Ljava/lang/SecurityManager;'
+ -  65 :  : '()[Ljava/lang/annotation/Annotation;'
+ -  66 :  : '(Ljava/lang/reflect/AccessibleObject;Z)V'
+ -  67 :  : '([Ljava/lang/reflect/AccessibleObject;Z)V'
+ -  68 :  : '(Ljava/security/Permission;)V'
+ -  69 :  : '(Ljava/security/PrivilegedAction;)Ljava/lang/Object;'
+ -  70 :  : '(Ljava/lang/Class;)Ljava/lang/annotation/Annotation;'
+ -  71 :  : '(Ljava/lang/Class<+Ljava/lang/annotation/Annotation;>;)Z'
+ -  72 :  : name_index=38 signature_index=17
+ -  73 :  : name_index=10 signature_index=58
+ -  74 :  : name_index=39 signature_index=59
+ -  75 :  : name_index=9 signature_index=4
+ -  76 :  : name_index=23 signature_index=61
+ -  77 :  : name_index=9 signature_index=63
+ -  78 :  : name_index=24 signature_index=64
+ -  79 :  : name_index=9 signature_index=6
+ -  80 :  : name_index=22 signature_index=65
+ -  81 :  : name_index=41 signature_index=66
+ -  82 :  : name_index=18 signature_index=68
+ -  83 :  : name_index=19 signature_index=69
+ -  84 :  : name_index=20 signature_index=70
+ -  85 :  : klass_index=51 name_and_type_index=72
+ -  86 :  : klass_index=51 name_and_type_index=73
+ -  87 :  : klass_index=51 name_and_type_index=74
+ -  88 :  : klass_index=45 name_and_type_index=77
+ -  89 :  : klass_index=47 name_and_type_index=75
+ -  90 :  : klass_index=48 name_and_type_index=79
+ -  91 :  : klass_index=49 name_and_type_index=82
+ -  92 :  : klass_index=50 name_and_type_index=78
+ -  93 :  : klass_index=51 name_and_type_index=80
+ -  94 :  : klass_index=51 name_and_type_index=81
+ -  95 :  : klass_index=51 name_and_type_index=84
+ -  96 :  : klass_index=53 name_and_type_index=76
+ -  97 :  : klass_index=54 name_and_type_index=79
+ -  98 :  : klass_index=55 name_and_type_index=83
+ -  99 :  : klass_index=57 name_and_type_index=75
+ - 100 :  : 'GetReflectionFactoryAction'
+
+RDI=0x0000000020000031 is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000001 is an unknown value
+R10=0x0000000000000000 is an unknown value
+R11=0x00000000025d8550 [CodeBlob (0x00000000025d8550)]
+Framesize: 0
+BufferBlob (0x00000000025d8550) used for native signature handlers
+R12=0x0000000000000000 is an unknown value
+R13=0x00000000daec1550 is an oop
+{method} 
+ - klass: {other class}
+R14=0x000000000258f630 is pointing into the stack for thread: 0x000000000058e000
+R15=0x000000000058e000 is a thread
+
+
+Stack: [0x0000000002490000,0x0000000002590000],  sp=0x000000000258f598,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+v  ~BufferBlob::native signature handlers
+j  java.lang.reflect.AccessibleObject.<clinit>()V+19
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x1e9da7]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+=>0x000000000058e000 JavaThread "main" [_thread_in_Java, id=7448, stack(0x0000000002490000,0x0000000002590000)]
+
+Other Threads:
+  0x0000000000501800 VMThread [stack: 0x0000000005ca0000,0x0000000005da0000] [id=7280]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 9536K, used 163K [0x00000000f5560000, 0x00000000f6000000, 0x0000000100000000)
+  eden space 8192K, 2% used [0x00000000f5560000,0x00000000f5588f68,0x00000000f5d60000)
+  from space 1344K, 0% used [0x00000000f5eb0000,0x00000000f5eb0000,0x00000000f6000000)
+  to   space 1344K, 0% used [0x00000000f5d60000,0x00000000f5d60000,0x00000000f5eb0000)
+ PSOldGen        total 21888K, used 0K [0x00000000e0000000, 0x00000000e1560000, 0x00000000f5560000)
+  object space 21888K, 0% used [0x00000000e0000000,0x00000000e0000000,0x00000000e1560000)
+ PSPermGen       total 21248K, used 960K [0x00000000dae00000, 0x00000000dc2c0000, 0x00000000e0000000)
+  object space 21248K, 4% used [0x00000000dae00000,0x00000000daef0000,0x00000000dc2c0000)
+
+Code Cache  [0x0000000002590000, 0x0000000002800000, 0x0000000005590000)
+ total_blobs=87 nmethods=0 adapters=62 free_code_cache=49985344 largest_free_block=384
+
+Dynamic libraries:
+0x0000000000400000 - 0x000000000042f000 	C:\Program Files\Java\jre6\bin\javaw.exe
+0x00000000777f0000 - 0x0000000077999000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00000000775d0000 - 0x00000000776ef000 	C:\Windows\system32\kernel32.dll
+0x000007fefd890000 - 0x000007fefd8fc000 	C:\Windows\system32\KERNELBASE.dll
+0x000007fefe820000 - 0x000007fefe8fb000 	C:\Windows\system32\ADVAPI32.dll
+0x000007fefec00000 - 0x000007fefec9f000 	C:\Windows\system32\msvcrt.dll
+0x000007fefe330000 - 0x000007fefe34f000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007fefdb10000 - 0x000007fefdc3d000 	C:\Windows\system32\RPCRT4.dll
+0x00000000776f0000 - 0x00000000777ea000 	C:\Windows\system32\USER32.dll
+0x000007fefdcc0000 - 0x000007fefdd27000 	C:\Windows\system32\GDI32.dll
+0x000007fefdd30000 - 0x000007fefdd3e000 	C:\Windows\system32\LPK.dll
+0x000007feffa30000 - 0x000007feffaf9000 	C:\Windows\system32\USP10.dll
+0x000007fefded0000 - 0x000007fefdefe000 	C:\Windows\system32\IMM32.DLL
+0x000007fefdf20000 - 0x000007fefe029000 	C:\Windows\system32\MSCTF.dll
+0x000000006d800000 - 0x000000006dfb8000 	C:\Program Files\Java\jre6\bin\server\jvm.dll
+0x000007fefb4e0000 - 0x000007fefb51b000 	C:\Windows\system32\WINMM.dll
+0x000000006d770000 - 0x000000006d77e000 	C:\Program Files\Java\jre6\bin\verify.dll
+0x000000006d3b0000 - 0x000000006d3d7000 	C:\Program Files\Java\jre6\bin\java.dll
+0x000000006d7c0000 - 0x000000006d7d2000 	C:\Program Files\Java\jre6\bin\zip.dll
+0x00000000779c0000 - 0x00000000779c7000 	C:\Windows\system32\PSAPI.DLL
+
+VM Arguments:
+jvm_args: -Dderby.system.home=. -Dfile.encoding=Cp1250 
+java_command: org.apache.derby.drda.NetworkServerControl start -h localhost -p 1527
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\
+USERNAME=Programing
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 15 Stepping 2, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 15 stepping 2, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3
+
+Memory: 4k page, physical 2096440k(565016k free), swap 4192880k(1118164k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (20.6-b01) for windows-amd64 JRE (1.6.0_31-b05), built on Feb  3 2012 18:34:57 by "java_re" with MS VC++ 8.0 (VS2005)
+
+time: Sat Jun 30 04:45:05 2012
+elapsed time: 0 seconds
+

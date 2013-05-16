@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:mvc="http://www.springframework.org/schema/mvc" 
+xmlns:jee="http://www.springframework.org/schema/jee" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/jdbc 
+http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd 
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+http://www.springframework.org/schema/jee 
+http://www.springframework.org/schema/jee/spring-jee-3.0.xsd"> 
+<jee:jndi-lookup id="ds" jndi-name="jdbc/BazaPodataka" /> 
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
+<property name="dataSource" ref="ds" /> 
+<property name="annotatedClasses"> 
+<list> 
+<value>hr.javaweb.zavrsni.model.Bookie</value> 
+<value>hr.javaweb.zavrsni.model.Matches</value>
+<value>hr.javaweb.zavrsni.model.User</value>
+<value>hr.javaweb.zavrsni.model.Role</value>
+<value>hr.javaweb.zavrsni.model.Event</value>
+<value>hr.javaweb.zavrsni.model.Runner</value>
+</list> 
+</property>
+ <property name="hibernateProperties"> 
+ <value> hibernate.format_sql=true hibernate.show_sql=true hibernate.dialect=org.hibernate.dialect.DerbyDialect </value> </property> 
+ </bean> <bean id="DAORepository" class="hr.javaweb.zavrsni.dao.DAOImplementation"> 
+ <property name="sessionFactory" ref="sessionFactory" /> </bean>
+  
+  <context:component-scan base-package="hr.javaweb.zavrsni.service" />
+   </beans>
