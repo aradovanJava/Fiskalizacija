@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -39,8 +40,9 @@ public class TaxRate{
 	 * 
 	 * Obvezan
 	 */
-	@XmlElement(name = "Stopa")
-	private double rate;
+	@XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "Stopa")
+	private Double rate;
 	
 	
 	/**
@@ -48,8 +50,9 @@ public class TaxRate{
 	 * 
 	 * Obvezan
 	 */
-	@XmlElement(name = "Osnovica")
-	private double baseValue;
+	@XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "Osnovica")
+	private Double baseValue;
 	
 	
 	/**
@@ -57,15 +60,16 @@ public class TaxRate{
 	 * 
 	 * Obvezan
 	 */
-	@XmlElement(name = "Iznos")
-	private double value;
+	@XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "Iznos")
+	private Double value;
 	
 	
 	public TaxRate(){
 	}
 	
 	
-	public TaxRate(double rate, double baseValue, double value, String name) {
+	public TaxRate(Double rate, Double baseValue, Double value, String name) {
 		super();
 		this.name = name;
 		this.rate = rate;
@@ -82,27 +86,27 @@ public class TaxRate{
 		this.name = name;
 	}
 
-	public double getRate() {
+	public Double getRate() {
 		return rate;
 	}
 
-	public void setRate(double rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
 
-	public double getMain() {
+	public Double getMain() {
 		return baseValue;
 	}
 
-	public void setMain(double mainValue) {
+	public void setMain(Double mainValue) {
 		this.baseValue = mainValue;
 	}
 
-	public double getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 

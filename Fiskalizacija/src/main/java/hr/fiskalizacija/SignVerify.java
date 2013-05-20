@@ -1,11 +1,7 @@
 package hr.fiskalizacija;
 
-
-
 import hr.model.CertParameters;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -51,7 +47,8 @@ import org.w3c.dom.NodeList;
  */
 public class SignVerify {
 
-	private static final String POSLOVNI_PROSTOR_ID = "poslovniProstorId";
+	// poslovniProstorId ili racunId oboje mora biti za potpis oba 
+	private static final String POSLOVNI_PROSTOR_ID = "racunId";
 	 private static final String PATTERN_FOR_GET_ID = "//*[@Id='%s']";
 	
 	

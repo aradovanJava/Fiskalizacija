@@ -1,6 +1,7 @@
 package hr.fiskalizacija;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Test {
 		Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
 				
 			// Slanje i ispis echo odgovora od servisa porezne uprave
-				System.out.println(fiskal.sendEchoMessage(fiskal));
+		//		System.out.println(fiskal.sendEchoMessage(fiskal));
 			
 				
 				Address adress = new Address();
@@ -76,13 +77,13 @@ public class Test {
 			// System.out.println(fiskal.writeSoap(new CreateXmls().createSoapMessage(new CreateXmls().businessAreaXml(businessAreaRequest))));
 				CreateXmls xml = new CreateXmls();
 			SignVerify signVerify = new SignVerify();
-			System.out.println(fiskal.writeSoap(signVerify.signSoap(xml.createSoapMessage(xml.businessAreaXml(businessAreaRequest)), fiskal)));
+			
 		*/	
 			
 				// potrebno je postaviti alias, ako ima više parova privatni kljuè - certifikat, ili koristi konstruktor s 4 parametara
 			//	fiskal.setAliasForPairJKSCert("60251384564");
 			
-				System.out.println(fiskal.sendSoap(fiskal, businessAreaRequest));
+			//	System.out.println(fiskal.sendSoap(fiskal, businessAreaRequest));
 
 				
 				
@@ -90,50 +91,55 @@ public class Test {
 			//	Kreiranje raèuna
 //----------------------------------------------------------------------------------------------------------------------------------------
 				
-				Refund refund = new Refund("Naziv naknade", 5.4);
 				
-				BillNumber billNumber = new BillNumber(1, "ODV1", "NAPL1");
+				
+				Refund refund = new Refund("Naziv naknade", 5.44);
+				
+				BillNumber billNumber = new BillNumber(1, "ODV1", "1");
 				
 				List<TaxRate> listPdv = new ArrayList<TaxRate>();
-				listPdv.add(new TaxRate(25, 400, 20, ""));
-				listPdv.add(new TaxRate(10, 500, 15.4, ""));
+				listPdv.add(new TaxRate(25.1, 400.1, 20.1, null));
+				listPdv.add(new TaxRate(10.1, 500.1, 15.444, null));
 				
 				List<TaxRate> listPnp = new ArrayList<TaxRate>();
-				listPnp.add(new TaxRate(30, 100, 10, ""));
-				listPnp.add(new TaxRate(20, 200.1, 20, ""));
+				listPnp.add(new TaxRate(30.1, 100.1, 10.1, null));
+				listPnp.add(new TaxRate(20.1, 200.1, 20.1, null));
 				
 				List<TaxRate> listOtherTaxRate = new ArrayList<TaxRate>();
-				listOtherTaxRate.add(new TaxRate(40, 453.3, 12, "Naziv1"));
-				listOtherTaxRate.add(new TaxRate(27, 445, 50, "Naziv2"));
+				listOtherTaxRate.add(new TaxRate(40.1, 453.3, 12.1, "Naziv1"));
+				listOtherTaxRate.add(new TaxRate(27.1, 445.1, 50.1, "Naziv2"));
 				
 				
 				Bill bill = new Bill();
 				
-				bill.setOib("12345678901");
+				bill.setOib("60251384564");
 				bill.setHavePDV(true);
 				bill.setDateTime(new GregorianCalendar(2013, GregorianCalendar.MAY, 5));
-				bill.setNoteOfOrder('P');
+			//	bill.setNoteOfOrder("P");
 				bill.setBillNumber(billNumber);
 				bill.setListPDV(listPdv);
 				bill.setListPNP(listPnp);
 				bill.setListOtherTaxRate(listOtherTaxRate);
-				bill.setTaxFreeValue(23.53);
-				bill.setMarginForTaxRate(32.544);
-				bill.setTaxFree(5);
+				bill.setTaxFreeValue(23.5);
+				bill.setMarginForTaxRate(32.0);
+				bill.setTaxFree(5.1);
 				//bill.setRefund(refund);
-				bill.setTotalValue(456);
+				bill.setTotalValue(456.1);
 				bill.setTypeOfPlacanje("G");
-				bill.setOibOperative("3456212343");
-				bill.setSecurityCode("ZKI");
+				bill.setOibOperative("34562123431");
+		
+				bill.setSecurityCode(bill.securityCode(bill.getOib(), bill.getDateTime(), "" + billNumber.getNumnerNoteBill(), billNumber.getNoteOfBusinessArea(), 
+						billNumber.getNoteOfExcangeDevice(), "" + bill.getTotalValue(), fiskal));
 				bill.setNoteOfRedelivary(false);
-				
 				
 				BillRequest billRequest = new BillRequest(new RequestHeader(), bill);
 				
 				CreateXmls createXmls = new CreateXmls();
 				
-			//	System.out.println(createXmls.createXmlForRequest(billRequest));
+			//	System.out.println(fiskal.writeSoap(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(businessAreaRequest)), fiskal)));
 				
+			  System.out.println(fiskal.sendSoap(fiskal, billRequest));
+			  //  System.out.println(createXmls.createXmlForRequest(billRequest));
 				
 				
 	}

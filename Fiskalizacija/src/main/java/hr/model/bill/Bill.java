@@ -1,6 +1,13 @@
 package hr.model.bill;
 
-import java.security.MessageDigest;
+import hr.fiskalizacija.Fiscalization;
+import hr.model.CertParameters;
+
+import java.io.FileInputStream;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.Signature;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -11,6 +18,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * Klasa za kreiranje XML tagova raèuna, potrebno ju je popuniti s neophodnim
@@ -55,7 +65,7 @@ public class Bill{
 	 * Obavezan podatak 
 	 */
 	@XmlElement(name = "OznSlijed")
-	private char noteOfOrder = 'N';
+	private String noteOfOrder = "N";
 	
 	
 	/**
@@ -124,8 +134,10 @@ public class Bill{
 	 * 
 	 * Obvezno u sluèaju da ima osloboðenja od PDV-a
 	 */
-	@XmlElement(name = "IznosOslobPdv")
-	private double taxFreeValuePdv;
+
+    @XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "IznosOslobPdv")
+	private Double taxFreeValuePdv;
 
 	
 	/**
@@ -133,8 +145,9 @@ public class Bill{
 	 * 
 	 * Obvezan ako postoji posebno oporezivanje prema èlanku 22. Zakona o PDV-u
 	 */
-	@XmlElement(name = "IznosMarza")
-	private double marginForTaxRate;
+    @XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "IznosMarza")
+	private Double marginForTaxRate;
 	
 	
 	/**
@@ -142,8 +155,9 @@ public class Bill{
 	 * 
 	 * Obvezan ako postoji iznos koji ne podliježe oporezivanju
 	 */
-	@XmlElement(name = "IznosNePodlOpor")
-	private double taxFreeValue;
+    @XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "IznosNePodlOpor")
+	private Double taxFreeValue;
 	
 	
 	/**
@@ -162,8 +176,9 @@ public class Bill{
 	 * 
 	 * Obvezan
 	 */
-	@XmlElement(name = "IznosUkupno")
-	private double totalValue;
+	@XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "IznosUkupno")
+	private Double totalValue;
 	
 	
 	/**
@@ -260,11 +275,11 @@ public class Bill{
 		this.dateTime = dateTimeformatForBill.format(dateTime.getTime());;
 	}
 
-	public char getNoteOfOrder() {
+	public String getNoteOfOrder() {
 		return noteOfOrder;
 	}
 
-	public void setNoteOfOrder(char noteOfOrder) {
+	public void setNoteOfOrder(String noteOfOrder) {
 		this.noteOfOrder = noteOfOrder;
 	}
 
@@ -300,27 +315,27 @@ public class Bill{
 		this.listOtherTaxRate = listOtherTaxRate;
 	}
 
-	public double getTaxFreeValue() {
+	public Double getTaxFreeValue() {
 		return taxFreeValuePdv;
 	}
 
-	public void setTaxFreeValue(double taxFreeValuePdv) {
+	public void setTaxFreeValue(Double taxFreeValuePdv) {
 		this.taxFreeValuePdv = taxFreeValuePdv;
 	}
 
-	public double getMarginForTaxRate() {
+	public Double getMarginForTaxRate() {
 		return marginForTaxRate;
 	}
 
-	public void setMarginForTaxRate(double marginForTaxRate) {
+	public void setMarginForTaxRate(Double marginForTaxRate) {
 		this.marginForTaxRate = marginForTaxRate;
 	}
 
-	public double getTaxFree() {
+	public Double getTaxFree() {
 		return taxFreeValue;
 	}
 
-	public void setTaxFree(double taxFreeValue) {
+	public void setTaxFree(Double taxFreeValue) {
 		this.taxFreeValue = taxFreeValue;
 	}
 
@@ -332,11 +347,11 @@ public class Bill{
 		this.refund = refund;
 	}
 
-	public double getTotalValue() {
+	public Double getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(double totalValue) {
+	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
 	}
 
@@ -392,37 +407,39 @@ public class Bill{
 	
 	/**
 	 * metoda vraæa ZKI (zaštitni kod raèuna) za odreðene ulazne parametre
-	 * @param sDate
-	 * @param sBrojDok
-	 * @param sSifObjekta
-	 * @param sSifBlag
-	 * @param sIznos
+	 *
+	 * @param oib
+	 * @param date
+	 * @param brBill
+	 * @param noteBussArea
+	 * @param noteExcangeDevice
+	 * @param totalValue
+	 * @param fiskal
 	 * @return
 	 */
-	public String securityCode(String sDate, String sBrojDok, String sSifObjekta, String sSifBlag, String sIznos) {
-		String sMedjRez = "";
-		String sRezMD5 = "";
-		try {		// sPK + sOIB + ubaciti u red ispod
-			sMedjRez =  sDate + sBrojDok + sSifObjekta + sSifBlag + sIznos;
-
-			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.reset();
-			digest.update(sMedjRez.getBytes());
-
-			byte[] a = digest.digest();
-			int len = a.length;
-			StringBuilder sb = new StringBuilder(len << 1);
-
-			for (int i = 0; i < len; i++) {
-				sb.append(Character.forDigit((a[i] & 0xf0) >> 4, 16));
-				sb.append(Character.forDigit(a[i] & 0x0f, 16));
-			}
-
-			sRezMD5 = sb.toString();
-		} catch (Exception e) {
+	public String securityCode(String oib, String date, String brBill, String noteBussArea, String noteExcangeDevice, String totalValue, Fiscalization fiskal) {
+		
+		String tempResult = oib + date.replace("T", " ") + brBill + noteBussArea + noteExcangeDevice + totalValue;
+		
+		byte[] potpisano = null;
+		
+		try{
+			FileInputStream file_inputstream = new FileInputStream(fiskal.getPathOfJKSCert() + 
+					fiskal.getNameOfJKSCert() + CertParameters.EXTENSION_OF_JKS);
+			KeyStore keyStore = KeyStore.getInstance(CertParameters.KEYSTORE_TYPE_JKS);
+			keyStore.load( file_inputstream, fiskal.getPasswdOfJKSCert().toCharArray() );
+			Key privatni = keyStore.getKey( fiskal.getAliasForPairJKSCert(), fiskal.getPasswdOfJKSCert().toCharArray());
+			
+			Signature biljeznik = Signature.getInstance("SHA1withRSA");
+			biljeznik.initSign((PrivateKey)privatni);
+			biljeznik.update(tempResult.getBytes());
+			potpisano = biljeznik.sign();
+		}catch(Exception e){
 			e.printStackTrace();
-		}	
-		return sRezMD5;
+		}
+		
+		String zki = DigestUtils.md5Hex(potpisano);
+		
+		return zki;
 	}
-	
 }

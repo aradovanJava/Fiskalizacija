@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement(name = "Naknada")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -12,14 +13,15 @@ public class Refund{
 	@XmlElement(name = "NazivN")
 	private String nameRefund;
 
-	@XmlElement(name = "IznosN")
-	private double valueRefund;
+	@XmlJavaTypeAdapter(Adapter.class)
+	@XmlElement(type = String.class, name = "IznosN")
+	private Double valueRefund;
 	
 	
 	public Refund(){
 	}
 	
-	public Refund(String nameRefund, double valueRefund) {
+	public Refund(String nameRefund, Double valueRefund) {
 		super();
 		this.nameRefund = nameRefund;
 		this.valueRefund = valueRefund;
@@ -34,12 +36,11 @@ public class Refund{
 		this.nameRefund = nameRefund;
 	}
 
-	public double getValueRefund() {
+	public Double getValueRefund() {
 		return valueRefund;
 	}
 
-	public void setValueRefund(double valueRefund) {
+	public void setValueRefund(Double valueRefund) {
 		this.valueRefund = valueRefund;
 	}
-
 }
