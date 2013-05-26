@@ -1,7 +1,6 @@
 package hr.fiskalizacija;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -11,11 +10,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
-import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.soap.SOAPPart;
 
 import org.w3c.dom.Document;
 
@@ -25,30 +21,38 @@ import hr.model.bill.BillRequest;
 
 public class CreateXmls{
 
+	private static final String UTF_8 = "UTF-8";
+	private static final String WRONG_INSTANCE = "Objekt koji je proslijeðen metodi nije tipa BusinessAreaRequest ili BillRequest";
+	private static final String ECHO_REQUEST = "EchoRequest";
+	private static final String TNS = "tns";
+	private static final String SCHEMA_LOCATION = "schemaLocation";
+	private static final String XSI = "xsi";
+	private static final String XSI_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
+	private static final String TNS_NAMESPACE = "http://www.apis-it.hr/fin/2012/types/f73";
+	private static final String PART_SHEMA_INFO = " FiskalizacijaSchema.xsd";
+	private static final String MESSAGE = "Komunikacija s servisom Porezne Uprave je uspjesno ostvarena";
 	
-	// Metoda koja kreira Echo poruku koja se moze poslati serveru kako bi se provjerilo da li server funkcionira
+	
+	/** 
+	 * Kreiranje Echo poruke kojom je moguæe provjeriti da li je moguæe uspostaviti komunikaciju
+	 * s servisom Porezne uprave
+	 **/
     public SOAPMessage createEchoMessage(){
        
         	SOAPMessage soapEchoMessage = null;
 			try {
 				soapEchoMessage = MessageFactory.newInstance().createMessage();
-				SOAPHeader header = soapEchoMessage.getSOAPHeader();
-				header.detachNode();
-				SOAPPart soapPart = soapEchoMessage.getSOAPPart();
-				SOAPEnvelope soapEnvelope = soapPart.getEnvelope();
-				SOAPBody soapBody = soapEnvelope.getBody();
+				SOAPBody soapBody = soapEchoMessage.getSOAPPart().getEnvelope().getBody();
      
-				// Kreiranje elementa u envelope sa odgovarajucim vrijednostima
-				QName elementInfo = new QName(null, "EchoRequest", "tns");
-				QName schemaInfo = new QName(null, "schemaLocation", "xsi");
+				QName elementInfo = new QName(null, ECHO_REQUEST, TNS);
+				QName schemaInfo = new QName(null, SCHEMA_LOCATION, XSI);
 				SOAPBodyElement bodyElement = soapBody.addBodyElement(elementInfo);
-				bodyElement.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				bodyElement.addNamespaceDeclaration("tns", "http://www.apis-it.hr/fin/2012/types/f73");
-				bodyElement.addAttribute(schemaInfo, "http://www.apis-it.hr/fin/2012/types/f73 FiskalizacijaSchema.xsd");
-				bodyElement.addTextNode("Komunikacija s servisom Porezne Uprave je uspjesno ostvarena");
+				bodyElement.addNamespaceDeclaration(XSI, XSI_NAMESPACE);
+				bodyElement.addNamespaceDeclaration(TNS, TNS_NAMESPACE);
+				bodyElement.addAttribute(schemaInfo, TNS_NAMESPACE + PART_SHEMA_INFO);
+				bodyElement.addTextNode(MESSAGE);
     
 				soapEchoMessage.saveChanges();
-				//System.out.println(writeSoap(soapEchoMessage));
 			} catch (SOAPException e) {
 				e.printStackTrace();
 			}	
@@ -57,61 +61,64 @@ public class CreateXmls{
 	
 	
 	
-	
-	public String createXmlForRequest(Object requestObject){
+	/**
+	 * Kreiranje XML-a iz popunjenog objekta koji predstavlja objekt zahtjeva za raèunom (BillRequest) ili poslovnim prostorom (BusinessAreaRequest)
+	 * 
+	 * @param requestObject objekt zahtjeva za raèunom ili poslovnim prostorom
+	 * @return kreiran XML u obliku stringa
+	 */
+	public Document createXmlForRequest(Object requestObject){
 		
 		// Potrebno implementirati provjere za podatke koji moraju biti u xml-u, te bacanje grešaka ako neki nije unesen
 				 
 				StringWriter writer = new StringWriter();
+				Document doc = null;
 				  try{
 					  JAXBContext jaxbContext = null;
+					  
+					  /** 
+					   * Provjera instance ulaznog parametra, te ovisno o ishodu provjere poziva se
+					   * metoda za kreiranje BusinessAreaRequest ili BillRequest XML dokumenta, a
+					   * ako nije niti jedan niti drugo, baca se iznimka
+					   **/
 					  if(requestObject instanceof BusinessAreaRequest){
 							 jaxbContext = JAXBContext.newInstance(new Class[] {BusinessAreaRequest.class});
 						}else if(requestObject instanceof BillRequest){
 							jaxbContext = JAXBContext.newInstance(new Class[] {BillRequest.class});
 						}else{
-							throw new RuntimeException("Objekt koji je proslijeðen metodi nije tipa BusinessAreaRequest ili BillRequest");
+							throw new RuntimeException(WRONG_INSTANCE);
 						}
 					  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 					  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 					  jaxbMarshaller.marshal(requestObject, writer);
-				}catch(Exception e){
+				
+					  /** Kreiranje objekta klase Document iz objekta klase StringWriter */
+					  DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+					  dbf.setNamespaceAware(true);	
+					  doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(writer.toString().getBytes(UTF_8)));
+					  
+				  }catch(Exception e){
 					e.printStackTrace();
 				}
-			        return writer.toString();			
+			        return doc;
 	}
 	
 	
 	
-	
-	public SOAPMessage createSoapMessage(String input_msg){
+	/**
+	 * Kreiranje SOAP poruke
+	 * 
+	 * @param doc objekt klase Document iz kojeg se kreira SOAP poruka
+	 * @return kreiranju SOAP poruku
+	 */
+	public SOAPMessage createSoapMessage(Document doc){
     	SOAPMessage message = null;
-    	InputStream in_stream = null;
     	try{
-	        in_stream = new ByteArrayInputStream(input_msg.getBytes());
-	        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	        dbf.setNamespaceAware(true);
-	        Document doc = dbf.newDocumentBuilder().parse(in_stream);
-	       
 	        message = MessageFactory.newInstance().createMessage();
-	        SOAPHeader header = message.getSOAPHeader();
-	        header.detachNode();
-	        SOAPPart soapPart = message.getSOAPPart();
-	        SOAPEnvelope soapEnvelope = soapPart.getEnvelope();
-	        SOAPBody soapBody = soapEnvelope.getBody();
-	        soapBody.addDocument(doc);
-	       
+	        message.getSOAPPart().getEnvelope().getBody().addDocument(doc);
 	        message.saveChanges();
     	}catch(Exception e){
     		e.printStackTrace();
-    	}
-    	finally{
-    		try{
-    			in_stream.close();
-    		}
-    		catch (Exception e){
-    			e.printStackTrace();
-    		}
     	}
         return message;
     }

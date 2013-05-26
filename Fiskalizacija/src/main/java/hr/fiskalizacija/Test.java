@@ -1,7 +1,6 @@
 package hr.fiskalizacija;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -28,18 +27,15 @@ public class Test {
 		 */
 		
 		Fiscalization fiskal = new Fiscalization("", "FiskalCert", "Mar+ininUr3d");
+
 			
-			
-			/*
+			/**
 			Ova funkcija se pozva samo jednom, te je potrebno da oba certifikata budu istog naziva i u istom direktoriju - putanji (npr. FiskalCert.cer i FiskalCert.pfx)
 			Ako nemaju istu putanju ili naziv, moguæe je postaviti setterima sve vrijednosti. Defaultni alias za ssl certifikat je "SSL" + oib
 			*/	
-		Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
-				
-			// Slanje i ispis echo odgovora od servisa porezne uprave
-		//		System.out.println(fiskal.sendEchoMessage(fiskal));
-			
-				
+			//	Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
+		
+		/** Popuna objekata potrebnih za prijavu poslovnog prostora */
 				Address adress = new Address();
 				adress.setCity("Zagreb");
 				adress.setStreet("Zagrebacka");
@@ -54,44 +50,33 @@ public class Test {
 				BusinessArea businessArea = new BusinessArea();
 				businessArea.setAdressData(adressData);
 				
-				
-				// kod GregoranCalendara može biti problem u mjesecu, jer sijeèanj je int 0, ako korisnik to ne zna, može doæi do problema
+				/** Kod GregoranCalendara može biti problem u mjesecu, jer sijeèanj je int 0, ako korisnik to ne zna, može doæi do problema */
 				businessArea.setDateOfusage(new GregorianCalendar(2013, GregorianCalendar.APRIL, 1));
 				
-				// Ovo je šifra poslovnog prostora, moguæe je slati izmjene, ali ne bi trebalo previše mijenjati, jer mislim da svaka promjena otvara novi poslovni prostor
+				/**
+				 *  Ovo je šifra poslovnog prostora, moguæe je slati izmjene, ali ne bi trebalo previše mijenjati, 
+				 *  jer mislim da svaka promjena otvara novi poslovni prostor
+				 */
 				businessArea.setNoteOfBusinessArea("ODV1");
 				// businessArea.setNoteOfClosing("z");
 				businessArea.setOib(fiskal.getOIBFromCert(fiskal));
 				//businessArea.setSpecificPurpose("spec namjena");
-				// Slobodan tekst, ukoliko ima više radnih vremena u bazi moguæe je impementirati funkciju za kreiranje stringa
+				
+				/** Slobodan tekst, ukoliko ima više radnih vremena u bazi moguæe je impementirati funkciju za kreiranje stringa */
 				businessArea.setWorkingTime("Pon:08-11h Uto:15-17");
 				BusinessAreaRequest businessAreaRequest = new BusinessAreaRequest(new RequestHeader(), businessArea);
 				
 
-			/*	
-		 	// Ispis xml-a nakon kreiranja xml-a
-			
-			System.out.println(xml.businessAreaXml(businessAreaRequest));
-		
-			// Ispis nakon kreiranja soap poruke, neposredno prije slanja
-			// System.out.println(fiskal.writeSoap(new CreateXmls().createSoapMessage(new CreateXmls().businessAreaXml(businessAreaRequest))));
-				CreateXmls xml = new CreateXmls();
-			SignVerify signVerify = new SignVerify();
-			
-		*/	
-			
 				// potrebno je postaviti alias, ako ima više parova privatni kljuè - certifikat, ili koristi konstruktor s 4 parametara
 			//	fiskal.setAliasForPairJKSCert("60251384564");
 			
-			//	System.out.println(fiskal.sendSoap(fiskal, businessAreaRequest));
-
+	
 				
 				
+			/**	Kreiranje raèuna
+ ---------------------------------------------------------------------------------------------------------------------------------------- */
 				
-			//	Kreiranje raèuna
-//----------------------------------------------------------------------------------------------------------------------------------------
-				
-				
+				/** Popuna objekata koji kreiraju SOAP poruku za raèun */ 
 				
 				Refund refund = new Refund("Naziv naknade", 5.44);
 				
@@ -134,14 +119,13 @@ public class Test {
 				
 				BillRequest billRequest = new BillRequest(new RequestHeader(), bill);
 				
-				CreateXmls createXmls = new CreateXmls();
-				
-			//	System.out.println(fiskal.writeSoap(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(businessAreaRequest)), fiskal)));
-				
-			  System.out.println(fiskal.sendSoap(fiskal, billRequest));
-			  //  System.out.println(createXmls.createXmlForRequest(billRequest));
-				
-				
+			  try{
+				  /** Moguæe je poslati zahtjev za billRequest ali i za businessAreaRequest */
+				  System.out.println(fiskal.writeSoap(fiskal.sendSoap(fiskal, billRequest)));
+				 // System.out.println(fiskal.sendEchoMessage(fiskal));
+			}catch(Exception e1){
+				e1.printStackTrace();
+			}	
 	}
 
 }

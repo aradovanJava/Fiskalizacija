@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.security.KeyStore;
 
 import javax.xml.soap.SOAPMessage;
-
-import hr.model.BusinessAreaRequest;
 import hr.model.CertParameters;
 
 /**
@@ -75,7 +73,7 @@ public class Fiscalization extends CertParameters{
 	 * @return
 	 */
 	public String sendEchoMessage(Fiscalization fiskal){
-		return writeSoap(new Connections().sendSoapMessage(new CreateXmls().createEchoMessage(), fiskal));
+		return writeSoap(new Connections().sendSoapMessage(new CreateXmls().createEchoMessage(), this));
 	}
 	
 	
@@ -90,15 +88,22 @@ public class Fiscalization extends CertParameters{
 	 * Vraæa odgovor od web servisa porezne uprave kao string
 	 * 
 	 * @param fiskal
-	 * @param businessAreaRequest
+	 * @param objectForCreateXml
 	 * @return
 	 */
-	public String sendSoap(Fiscalization fiskal, Object objectForCreateXml){
-		return writeSoap(new Connections().sendSoapMessage(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(objectForCreateXml)), fiskal),fiskal));
+
+	public SOAPMessage sendSoap(Fiscalization fiskal, Object objectForCreateXml){
+		SOAPMessage soapMessage = new Connections().sendSoapMessage(new SignVerify().signSoap(new CreateXmls().createSoapMessage(new CreateXmls().createXmlForRequest(objectForCreateXml)), this), this);
+		
+		// Potrebno je preuzeti sve dijelove SOAP poruke u objekt klase koja za sada još nije kreirana s JAXB-em
+		
+		if(new SignVerify().verifyMessage(soapMessage)){
+			System.out.println("SOAP poruka koju je poslao servis Porezne uprave je pravilno potpisana.");
+		}else{
+			System.out.println("Neispravan digitalni potpis.");
+		}
+		return  soapMessage;
 	}
-	
-	public Boolean verifyResponseSOAP(SOAPMessage message){
-		return null;}
 	
 	/**
 	 * Metoda za preuzimanje OIB-a iz certifikata 
@@ -110,8 +115,8 @@ public class Fiscalization extends CertParameters{
 		String oib = null;
 		try {
 			KeyStore keyStoreJKS = KeyStore.getInstance(KEYSTORE_TYPE_JKS);
-			keyStoreJKS.load(new FileInputStream(fiskal.getPathOfJKSCert() + fiskal.getNameOfJKSCert() + EXTENSION_OF_JKS), fiskal.getPasswdOfJKSCert().toCharArray());
-			oib = getOIBFromCert(keyStoreJKS, fiskal.getAliasForPairJKSCert());
+			keyStoreJKS.load(new FileInputStream(getPathOfJKSCert() + getNameOfJKSCert() + EXTENSION_OF_JKS), getPasswdOfJKSCert().toCharArray());
+			oib = getOIBFromCert(keyStoreJKS, getAliasForPairJKSCert());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
