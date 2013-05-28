@@ -38,6 +38,7 @@ import javax.xml.crypto.dsig.keyinfo.X509IssuerSerial;
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 import javax.xml.xpath.XPath;
@@ -80,10 +81,7 @@ public class SignVerify {
 	  */
 	   public SOAPMessage signSoap(SOAPMessage soapMessage, CertParameters certParameters){
 		   
-	       SOAPPart soapPart = null;
-	       soapPart = soapMessage.getSOAPPart();
-	       soapPart.getContentId();
-	       
+	        SOAPBody soapBody = null;
 	        Node nodepartForSign = null;
 	        XPathExpression xPathExp = null;
 	        NodeList nodeList;
@@ -95,16 +93,17 @@ public class SignVerify {
 	        		 * Traženje id-a po kojem se vrši potpis u SOAP poruci, defaultno se postavlja "racunId",
 	        		 * a ako se radi o SOAP poruci koja predstavlja poslovni prostor onda je "poslovniProstorId"
 	        		 **/
-	    			ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        		soapBody = soapMessage.getSOAPBody();	
+	        		ByteArrayOutputStream out = new ByteArrayOutputStream();
 					soapMessage.writeTo(out);
 	    			String idForSign = BILL_ID;
 	    			if(new String(out.toByteArray()).contains(BUSINESS_AREA_ID)){
 	    				idForSign = BUSINESS_AREA_ID;
 	    			}
-	        
+	    			soapBody = soapMessage.getSOAPBody();
 	    			/** Pronalazak elemeta s id prema koje se vrši potpis unutar soap poruke */
 	    			xPathExp = xpath.compile(String.format(PATTERN_FOR_GET_ID, idForSign));
-				    nodeList = (NodeList) xPathExp.evaluate(soapPart, XPathConstants.NODESET);
+				    nodeList = (NodeList) xPathExp.evaluate(soapBody, XPathConstants.NODESET);
 				    
 				    /** Ako nije pronaðen element koji sadrži id prema kojem se potpisuje, baci exception */
 				    if (nodeList.getLength() == 0){

@@ -53,10 +53,8 @@ public class Fiscalization extends CertParameters{
 	 * Defaultne vrijednosti (password, putanja, naziv) æe biti iste kao i prilikom kreiranje objekta   
 	 * Ako nemaju istu putanju ili naziv, moguæe je postaviti sve vrijednosti setterima nakon kreiranja objekta klase Fiskalization.
 	 *
-	 * Vraæa broj unesenih certifikata u JKS keystore
-	 * 
 	 * @param fiskal
-	 * @return
+	 * @return broj unesenih certifikata u JKS keystore
 	 */
 	public static int convertFromPKCSAndSSLToJKS(Fiscalization fiskal){
 		return PrepareCertificate.convertFromPKCSAndSSLToJKS(fiskal);
@@ -84,12 +82,10 @@ public class Fiscalization extends CertParameters{
 	 * 	- kreira SOAP poruku
 	 * 	- potpisuje SOAP poruku
 	 * 	- šalje SOAP poruku prema web servisu porezne uprave 
-	 *
-	 * Vraæa odgovor od web servisa porezne uprave kao string
-	 * 
+	
 	 * @param fiskal
 	 * @param objectForCreateXml
-	 * @return
+	 * @return odgovor od web servisa porezne uprave kao string
 	 */
 
 	public SOAPMessage sendSoap(Fiscalization fiskal, Object objectForCreateXml){

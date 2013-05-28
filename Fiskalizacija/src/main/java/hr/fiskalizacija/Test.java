@@ -26,7 +26,7 @@ public class Test {
 		 * U tom sluèaju nakon kreiranja objekta fiskal potrebno je postaviti ime .jks filea u koji se spremaju svi certifikati fiskal.setNameOfJKSCert(nameOfJKSCert)
 		 */
 		
-		Fiscalization fiskal = new Fiscalization("", "FiskalCert", "Mar+ininUr3d");
+		Fiscalization fiskal = new Fiscalization("", "naziv_cert", "password_cert");
 
 			
 			/**
