@@ -36,6 +36,7 @@ public class Test {
 			//	Fiscalization.convertFromPKCSAndSSLToJKS(fiskal);
 		
 		/** Popuna objekata potrebnih za prijavu poslovnog prostora */
+				//
 				Address adress = new Address();
 				adress.setCity("Zagreb");
 				adress.setStreet("Zagrebacka");
