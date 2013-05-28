@@ -8,7 +8,7 @@ public class CertificateTest {
 
 	@Test
 	public void test() {
-		Fiscalization fiskal = new Fiscalization("", "FiskalCert", "Mar+ininUr3d");
+		Fiscalization fiskal = new Fiscalization("", "naziv_cert", "password_cert");
 		int count = PrepareCertificate.convertFromPKCSAndSSLToJKS(fiskal);
 		assertTrue(count > 0);
 	}
